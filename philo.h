@@ -6,7 +6,7 @@
 /*   By: kchaniot <kchaniot@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 19:32:28 by kchaniot          #+#    #+#             */
-/*   Updated: 2022/01/16 21:38:51 by kchaniot         ###   ########.fr       */
+/*   Updated: 2022/01/16 22:20:31 by kchaniot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int			dinner_init(t_info *info);
 void		*dinner_table(void *philo);
 void		grab_forks(t_info *in, t_philo *ph);
 void		eat(t_info *in, t_philo *ph);
-void		check_death(t_info *in);
+void	checker(t_info *in, t_philo *ph);
+int			check_death(t_info *in, t_philo *ph, int time);
 int			clean_table(t_info *in);
 void		message(t_info *info, t_philo *ph, char *mes);
 int			is_digit(char **argv);
