@@ -25,8 +25,8 @@ int	ingredients_check(int argc, char **argv, t_info *input)
 	if (!pass_input(argc, argv, input))
 		return (error_p("Forks memory allocation failed"));
 	if (ft_atoi(argv[1]) == 1)
-		return (error_p("Philosopher starved to death. \
-		Unable to eat with a fork."));
+		return (error_p("Philosopher starved to death.\
+Unable to eat with a fork."));
 	return (0);
 }
 
