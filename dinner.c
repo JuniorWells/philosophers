@@ -6,13 +6,13 @@
 /*   By: kchaniot <kchaniot@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 10:48:58 by kchaniot          #+#    #+#             */
-/*   Updated: 2022/01/16 22:32:41 by kchaniot         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:16:34 by kchaniot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int dinner_init(t_info *info)
+int	dinner_init(t_info *info)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ int dinner_init(t_info *info)
 		i++;
 	}
 	i = 0;
-	usleep(1000);
+	usleep(500);
 	while (i < info->n_phil)
 	{
 		if (pthread_join(info->phils[i].th_id, NULL))
@@ -39,17 +39,17 @@ int dinner_init(t_info *info)
 
 void	*dinner_table(void *philo)
 {
-	t_philo *ph;
+	t_philo	*ph;
 	t_info	*in;
 
 	ph = (t_philo *) philo;
 	in = ph->info;
 	if (!(ph->id % 2))
-		usleep(500);
-	while (in->the_end)
+		usleep(50);
+	while (!in->the_end)
 	{
-		//if (check_death(in, ph, 0))
-		//	return (NULL);
+		if (check_death(in, ph))
+			return (NULL);
 		if (in->meals_flag && ph->meals_eaten == in->n_meals)
 		{
 			printf("Philosopher %d ate %d meals.\n", ph->id, ph->meals_eaten);
@@ -66,13 +66,15 @@ void	grab_forks(t_info *in, t_philo *ph)
 	message(in, ph, FORK);
 	pthread_mutex_lock(&(in->forks[ph->id % in->n_phil]));
 	message(in, ph, FORK);
-	//check_death(in, ph, in->t_eat);
+	check_death(in, ph);
 	eat(in, ph);
 	ph->meals_eaten++;
 	pthread_mutex_unlock(&(in->forks[ph->id - 1]));
 	pthread_mutex_unlock(&(in->forks[ph->id % in->n_phil]));
+	check_death(in, ph);
 	message(in, ph, SLEEP);
 	usleep(in->t_sleep * 1000);
+	check_death(in, ph);
 	message(in, ph, THINK);
 }
 
@@ -85,19 +87,14 @@ void	eat(t_info *in, t_philo *ph)
 	pthread_mutex_unlock(&(ph->dead));
 }
 
-//int	check_death(t_info *in, t_philo *ph, int time)
-//{
-//	pthread_mutex_lock(&ph->dead);
-//	if (get_time() - ph->last_meal_time < in->t_die)
-//		usleep(time * 1000);
-//	else
-//	{
-//		in->the_end = 0;
-//		message(in, ph, DEAD);
-//		pthread_mutex_unlock(&ph->dead);
-//		return (1);
-		
-//	}
-//	pthread_mutex_unlock(&ph->dead);
-//	return (0);
-//}
+int	check_death(t_info *in, t_philo *ph)
+{
+	pthread_mutex_lock(&ph->dead);
+	if (get_time() - ph->last_meal_time > in->t_die)
+	{
+		message(in, ph, DEAD);
+		in->the_end = 1;
+	}
+	pthread_mutex_unlock(&ph->dead);
+	return (0);
+}

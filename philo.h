@@ -6,7 +6,7 @@
 /*   By: kchaniot <kchaniot@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 19:32:28 by kchaniot          #+#    #+#             */
-/*   Updated: 2022/01/16 22:20:31 by kchaniot         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:15:34 by kchaniot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,23 @@ typedef struct s_info
 	pthread_mutex_t	print_mutex;
 }				t_info;
 
+int			init_mutants(t_info *in);
+int			catering_check(t_info *in);
 int			dinner_init(t_info *info);
-void		*dinner_table(void *philo);
-void		grab_forks(t_info *in, t_philo *ph);
-void		eat(t_info *in, t_philo *ph);
-void	checker(t_info *in, t_philo *ph);
-int			check_death(t_info *in, t_philo *ph, int time);
+int			check_death(t_info *in, t_philo *ph);
 int			clean_table(t_info *in);
-void		message(t_info *info, t_philo *ph, char *mes);
 int			is_digit(char **argv);
-long long	get_time(void);
 int			ft_atoi(const char *str);
-size_t		ft_strlen(const char *s);
 int			init_phil(t_info *input);
 int			pass_input(int argc, char **argv, t_info *input);
 int			error_p(char *str);
-int			error_check(int argc, char **argv, t_info *input);
+int			ingredients_check(int argc, char **argv, t_info *input);
+void		*dinner_table(void *philo);
+void		grab_forks(t_info *in, t_philo *ph);
+void		eat(t_info *in, t_philo *ph);
+void		checker(t_info *in, t_philo *ph);
+void		message(t_info *info, t_philo *ph, char *mes);
+size_t		ft_strlen(const char *s);
+long long	get_time(void);
 
 #endif

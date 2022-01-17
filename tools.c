@@ -6,7 +6,7 @@
 /*   By: kchaniot <kchaniot@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 19:58:35 by kchaniot          #+#    #+#             */
-/*   Updated: 2022/01/16 20:54:41 by kchaniot         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:19:18 by kchaniot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ long long	get_time(void)
 	long long		time;
 
 	gettimeofday(&tv, NULL);
-	time = (tv.tv_sec * 1000LL) + (tv.tv_usec / 1000);
+	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return (time);
 }
 
@@ -79,6 +79,7 @@ int	is_digit(char **argv)
 void	message(t_info *info, t_philo *ph, char *mes)
 {
 	pthread_mutex_lock(&(info->print_mutex));
-	printf("%lld Philosopher %d %s\n", get_time(), ph->id, mes);
+	if (!info->the_end)
+		printf("%lld Philosopher %d %s\n", get_time(), ph->id, mes);
 	pthread_mutex_unlock(&(info->print_mutex));
 }
