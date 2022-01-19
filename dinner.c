@@ -6,7 +6,7 @@
 /*   By: kchaniot <kchaniot@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 10:48:58 by kchaniot          #+#    #+#             */
-/*   Updated: 2022/01/17 12:16:34 by kchaniot         ###   ########.fr       */
+/*   Updated: 2022/01/17 13:27:15 by kchaniot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	*dinner_table(void *philo)
 	ph = (t_philo *) philo;
 	in = ph->info;
 	if (!(ph->id % 2))
-		usleep(50);
+		usleep(500);
 	while (!in->the_end)
 	{
 		if (check_death(in, ph))
@@ -66,15 +66,14 @@ void	grab_forks(t_info *in, t_philo *ph)
 	message(in, ph, FORK);
 	pthread_mutex_lock(&(in->forks[ph->id % in->n_phil]));
 	message(in, ph, FORK);
-	check_death(in, ph);
 	eat(in, ph);
 	ph->meals_eaten++;
 	pthread_mutex_unlock(&(in->forks[ph->id - 1]));
 	pthread_mutex_unlock(&(in->forks[ph->id % in->n_phil]));
-	check_death(in, ph);
+	//check_death(in, ph);
 	message(in, ph, SLEEP);
 	usleep(in->t_sleep * 1000);
-	check_death(in, ph);
+	//check_death(in, ph);
 	message(in, ph, THINK);
 }
 
