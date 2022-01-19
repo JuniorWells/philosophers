@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kchaniot <kchaniot@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: kchaniot <kchaniot@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 20:12:31 by kchaniot          #+#    #+#             */
-/*   Updated: 2022/01/17 12:17:11 by kchaniot         ###   ########.fr       */
+/*   Updated: 2022/01/18 03:37:37 by kchaniot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ int	ingredients_check(int argc, char **argv, t_info *input)
 	< 60 || ft_atoi(argv[4]) < 60 || (argc == 6 && ft_atoi(argv[5]) <= 0) || \
 	!ft_atoi(argv[1]))
 		return (error_p("Invalid arguments"));
-	if (!pass_input(argc, argv, input))
-		return (error_p("Forks memory allocation failed"));
 	if (ft_atoi(argv[1]) == 1)
 		return (error_p("Philosopher starved to death.\
 Unable to eat with a fork."));
+	if (!pass_input(argc, argv, input))
+		return (error_p("Forks memory allocation failed"));
 	return (0);
 }
 
 int	pass_input(int argc, char **argv, t_info *input)
 {
+	int i;
 	input->n_phil = ft_atoi(argv[1]);
 	input->t_die = ft_atoi(argv[2]);
 	input->t_eat = ft_atoi(argv[3]);
@@ -44,9 +45,12 @@ int	pass_input(int argc, char **argv, t_info *input)
 		input->n_meals = ft_atoi(argv[5]);
 		input->meals_flag = 1;
 	}
-	input->forks = malloc(sizeof(pthread_mutex_t) * input->n_phil);
+	input->forks = malloc(sizeof(int) * input->n_phil);
 	if (!input->forks)
 		return (0);
+	i = 0;
+	while (i < input->n_phil)
+		input->forks[i++] = 1;
 	return (1);
 }
 
@@ -61,16 +65,10 @@ int	clean_table(t_info *in)
 	int	i;
 
 	i = 0;
-	if (pthread_mutex_destroy(&in->print_mutex))
+	if (pthread_mutex_destroy(&in->print_mutex) || \
+	pthread_mutex_destroy(&in->dead) || \
+	pthread_mutex_destroy(&in->f_access))
 		return (error_p("Mutex is indestructible"));
-	while (i < in->n_phil)
-	{
-		if (pthread_mutex_destroy(&in->forks[i]))
-			return (error_p("Adamantine forks"));
-		if (pthread_mutex_destroy(&in->phils[i].dead))
-			return (error_p("Eating forever is an option"));
-		i++;
-	}
 	free(in->forks);
 	free(in->phils);
 	return (0);
