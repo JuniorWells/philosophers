@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kchaniot <kchaniot@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: kchaniot <kchaniot@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 19:32:28 by kchaniot          #+#    #+#             */
-/*   Updated: 2022/01/18 04:14:54 by kchaniot         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:53:59 by kchaniot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int			init_phil(t_info *input);
 int			pass_input(int argc, char **argv, t_info *input);
 int			error_p(char *str);
 int			ingredients_check(int argc, char **argv, t_info *input);
+void		my_sleep(int time, t_info *in, t_philo *ph);
 void		*dinner_table(void *philo);
 void		grab_forks(t_info *in, t_philo *ph);
 void		eat(t_info *in, t_philo *ph);

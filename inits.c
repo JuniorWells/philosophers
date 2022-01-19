@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kchaniot <kchaniot@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: kchaniot <kchaniot@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:37:12 by kchaniot          #+#    #+#             */
-/*   Updated: 2022/01/18 04:16:32 by kchaniot         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:02:28 by kchaniot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
